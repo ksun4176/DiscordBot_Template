@@ -12,28 +12,25 @@ declare module "discord.js" {
 }
 dotenv.config();
 
-const port = process.env.BOT_PORT ?? "9000";
-
-// create a Discord client with the right intents
-const client: Client = new Client({
-    intents: [
-        IntentsBitField.Flags.Guilds,
-        IntentsBitField.Flags.GuildMembers,
-        IntentsBitField.Flags.GuildMessages
-        // IntentsBitField.Flags.MessageContent
-    ]
-});
-
-// add all commands to be handled
-client.commands = new Collection();
-const commandCallbackFn = (command: CommandInterface) => {
-    client.commands.set(command.data.name, command);
-}
-executeOnAllCommands(commandCallbackFn);
-
-addEventListeners(client);
-
 const main = async () => {
+    const port = process.env.BOT_PORT ?? "9000";
+    const client: Client = new Client({
+        intents: [
+            IntentsBitField.Flags.Guilds,
+            IntentsBitField.Flags.GuildMembers,
+            IntentsBitField.Flags.GuildMessages
+            // IntentsBitField.Flags.MessageContent
+        ]
+    });
+
+    client.commands = new Collection();
+    const setCommandExecutables = (command: CommandInterface) => {
+        client.commands.set(command.data.name, command);
+    }
+    executeOnAllCommands(setCommandExecutables);
+
+    addEventListeners(client);
+
     try {
         await client.login(process.env.CLIENT_TOKEN!);
         const app = express();
