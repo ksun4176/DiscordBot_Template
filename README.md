@@ -9,11 +9,10 @@ This uses Node.js, TypeScript, and Docker.
 - `package.json` and `tsconfig.json`: These files are used to configure Node.js
 - `src/`: This is where your bot code would live
    - `./app.ts`: Entrypoint of your bot
-   - `./DiscordHelper.ts`: Help set up your bot
-   - `./*Interface.ts`: Structure for interactions handled by your bot
-   - `./buttons/*`: All of your button interactions. When a new one gets added, you will need to update `./events/InteractionCreate.ts` as well
-   - `./commands/*`: All of your commands (NOTE: All commands in this directory and one subdirectory level deeper will be automatically handled by bot)
-   - `./events/*`: All of your discord events (NOTE: All events in this directory ONLY will be automatically handled by bot)
+   - `./utils`: This contains files to help with set up of interactions from individual structure to registering/binding
+   - `./buttons/*`: All of your button interactions
+   - `./commands/*`: All of your commands
+   - `./events/*`: All of your discord events
 - All other files are auto generated so they do not need to be touched.
 
 ## How to Use
@@ -21,7 +20,7 @@ To start a development bot:
 2. Copy `.env.example` to `.env` and fill it in for your discord bot
 3. Call `npm install` to install node dependencies
 4. Call `npm run register` to register your discord bot with your commands
-   - If you change anything in a command definition (`command.data`), you will need to call this again.
+   - If you change anything in a command definition, you will need to call this again.
 5. Initiate a development server using `npm run dev`
    - This uses nodemon which will track real time updates to your changes and restart the server automatically
 6. Once you get the `Ready! Logged in as <Discord Bot>`, your bot is online.
