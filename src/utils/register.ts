@@ -19,8 +19,10 @@ export async function bindEvents(client: Client, dir: string) {
   for (const file of folders) {
     const stat = await fs.lstat(path.join(foldersPath, file));
     const relFilePath = path.join(dir, file);
-    if (stat.isDirectory()) bindEvents(client, relFilePath);
-    if (file.endsWith('.js') || file.endsWith('.ts')) {
+    if (stat.isDirectory()) {
+      await bindEvents(client, relFilePath);
+    }
+    else if (file.endsWith('.js') || file.endsWith('.ts')) {
       const { default: Event } = await import(path.join(dir, file));
       const event: BaseEvent<any> = new Event();
       const eventName = event.getEvent();
@@ -46,8 +48,10 @@ export async function bindButtons(client: Client, dir: string) {
   for (const file of folders) {
     const stat = await fs.lstat(path.join(foldersPath, file));
     const relFilePath = path.join(dir, file);
-    if (stat.isDirectory()) bindEvents(client, relFilePath);
-    if (file.endsWith('.js') || file.endsWith('.ts')) {
+    if (stat.isDirectory()) {
+      await bindEvents(client, relFilePath);
+    }
+    else if (file.endsWith('.js') || file.endsWith('.ts')) {
       const { default: Button } = await import(path.join(dir, file));
       const button: BaseButton = new Button();
       client.buttons.set(button.getCustomId(), button);
@@ -66,8 +70,10 @@ async function executeOnAllCommands(dir: string, callbackFn: (command: BaseChatI
   for (const file of folders) {
     const stat = await fs.lstat(path.join(foldersPath, file));
     const relFilePath = path.join(dir, file);
-    if (stat.isDirectory()) executeOnAllCommands(relFilePath, callbackFn);
-    if (file.endsWith('.js') || file.endsWith('.ts')) {
+    if (stat.isDirectory()) {
+      await executeOnAllCommands(relFilePath, callbackFn);
+    }
+    else if (file.endsWith('.js') || file.endsWith('.ts')) {
       const { default: Command } = await import(relFilePath);
       const command: BaseChatInputCommand = new Command();
       callbackFn(command);

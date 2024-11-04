@@ -1,7 +1,7 @@
 import { Events, Interaction } from 'discord.js';
 import { BaseEvent } from '../../utils/structures/BaseEvent';
 
-export default class InterctionCreateEvent extends BaseEvent<Events.InteractionCreate> {
+export default class InteractionCreateEvent extends BaseEvent<Events.InteractionCreate> {
   constructor() {
     super(Events.InteractionCreate);
   }

@@ -14,7 +14,7 @@ export interface BaseChatInputCommand {
    * Supply options for command arguments that have been marked as being autocomplete
    * @param interaction Interaction that triggered the autocomplete
    */
-  autocomplete?: (interaction: AutocompleteInteraction) => Promise<void>;
+  autocomplete?(interaction: AutocompleteInteraction): Promise<void>;
 }
 
 export abstract class BaseChatInputCommand {
