@@ -17,13 +17,13 @@ This uses Node.js, TypeScript, and Docker.
 
 ## How to Use
 To start a development bot:
-2. Copy `.env.example` to `.env` and fill it in for your discord bot
-3. Call `npm install` to install node dependencies
-4. Call `npm run register` to register your discord bot with your commands
+1. Copy `.env.example` to `.env` and fill it in for your discord bot
+2. Call `npm install` to install node dependencies
+3. Call `npm run register` to register your discord bot with your commands
    - If you change anything in a command definition, you will need to call this again.
-5. Initiate a development server using `npm run dev`
+4. Initiate a development server using `npm run dev`
    - This uses nodemon which will track real time updates to your changes and restart the server automatically
-6. Once you get the `Ready! Logged in as <Discord Bot>`, your bot is online.
+5. Once you get the `Ready! Logged in as <Discord Bot>`, your bot is online.
 
 ## How to Dockerize
 1. Call `docker build -t <docker-image-name> -f Dockerfile .` to build your docker image
