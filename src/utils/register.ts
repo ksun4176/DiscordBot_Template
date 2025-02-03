@@ -49,7 +49,7 @@ export async function bindButtons(client: Client, dir: string) {
     const stat = await fs.lstat(path.join(foldersPath, file));
     const relFilePath = path.join(dir, file);
     if (stat.isDirectory()) {
-      await bindEvents(client, relFilePath);
+      await bindButtons(client, relFilePath);
     }
     else if (file.endsWith('.js') || file.endsWith('.ts')) {
       const { default: Button } = await import(path.join(dir, file));
