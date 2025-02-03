@@ -150,11 +150,17 @@ async function registerOwnerCommands(ownerCommands?: RESTPostAPIApplicationComma
       ownerCommands = commandsMap.get(CommandLevel.Owner) ?? [];
 		}
 		console.log(`Started refreshing ${ownerCommands.length} owner (/) commands.`);
-    const data = await rest.put(
-			Routes.applicationGuildCommands(process.env.CLIENT_ID!, process.env.OWNER_SERVER_ID!),
-      { body: ownerCommands },
-    );
-		console.log(`Successfully reloaded ${(data as any[]).length} owner (/) commands.`);
+    let data: any[] = [];
+    if (!process.env.OWNER_SERVER_ID) {
+      console.log(`No Discord Server ID provided.`)
+    }
+    else {
+      data = await rest.put(
+        Routes.applicationGuildCommands(process.env.CLIENT_ID!, process.env.OWNER_SERVER_ID),
+        { body: ownerCommands },
+      ) as any[];
+    }
+		console.log(`Successfully reloaded ${data.length} owner (/) commands.`);
 	}
     catch (error) {
 		console.error(error);

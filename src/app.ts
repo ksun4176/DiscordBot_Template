@@ -7,7 +7,7 @@ import { BaseEvent } from "./utils/structures/BaseEvent";
 import { BaseButton } from "./utils/structures/BaseButton";
 
 
-// augment client with the command property
+// augment client with additional properties
 declare module "discord.js" {
   interface Client {
     chatInputCommands: Collection<string, BaseChatInputCommand>

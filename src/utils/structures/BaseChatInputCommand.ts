@@ -1,4 +1,5 @@
 import { AutocompleteInteraction, ChatInputCommandInteraction, SharedSlashCommand } from 'discord.js';
+import { Base } from './Base';
 
 /**
  * Which servers should be able to get command
@@ -17,8 +18,10 @@ export interface BaseChatInputCommand {
   autocomplete?(interaction: AutocompleteInteraction): Promise<void>;
 }
 
-export abstract class BaseChatInputCommand {
-  constructor(private level: CommandLevel, private definition: SharedSlashCommand) {}
+export abstract class BaseChatInputCommand extends Base {
+  constructor(private level: CommandLevel, private definition: SharedSlashCommand) {
+    super();
+  }
 
   /**
    * Get which servers should register the command
