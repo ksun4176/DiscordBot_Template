@@ -43,19 +43,24 @@ export async function bindEvents(client: Client, dir: string) {
  * @param dir relative path to buttons folder from where this function is defined
  */
 export async function bindButtons(client: Client, dir: string) {
-  const foldersPath = path.join(__dirname, dir);
-  const folders = await fs.readdir(foldersPath);
-  for (const file of folders) {
-    const stat = await fs.lstat(path.join(foldersPath, file));
-    const relFilePath = path.join(dir, file);
-    if (stat.isDirectory()) {
-      await bindButtons(client, relFilePath);
+  try {
+    const foldersPath = path.join(__dirname, dir);
+    const folders = await fs.readdir(foldersPath);
+    for (const file of folders) {
+      const stat = await fs.lstat(path.join(foldersPath, file));
+      const relFilePath = path.join(dir, file);
+      if (stat.isDirectory()) {
+        await bindButtons(client, relFilePath);
+      }
+      else if (file.endsWith('.js') || file.endsWith('.ts')) {
+        const { default: Button } = await import(path.join(dir, file));
+        const button: BaseButton = new Button();
+        client.buttons.set(button.getCustomId(), button);
+      }
     }
-    else if (file.endsWith('.js') || file.endsWith('.ts')) {
-      const { default: Button } = await import(path.join(dir, file));
-      const button: BaseButton = new Button();
-      client.buttons.set(button.getCustomId(), button);
-    }
+  }
+  catch (error) {
+    console.log(error);
   }
 }
 
